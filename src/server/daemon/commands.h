@@ -62,7 +62,8 @@ namespace server {
 common::Error ChangedSourcesStreamBroadcast(const ChangedSouresInfo& params, fastotv::protocol::request_t* req);
 common::Error StatisitcStreamBroadcast(const StatisticInfo& params, fastotv::protocol::request_t* req);
 #if defined(MACHINE_LEARNING)
-common::Error MlNotificationStreamBroadcast(const fastotv::commands_info::ml::NotificationInfo& params, fastotv::protocol::request_t* req);
+common::Error MlNotificationStreamBroadcast(const fastotv::commands_info::ml::NotificationInfo& params,
+                                            fastotv::protocol::request_t* req);
 #endif
 common::Error StatisitcServiceBroadcast(fastotv::protocol::serializet_params_t params,
                                         fastotv::protocol::request_t* req);

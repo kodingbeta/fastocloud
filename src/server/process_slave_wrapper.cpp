@@ -1061,7 +1061,7 @@ common::ErrnoError ProcessSlaveWrapper::HandleRequestClientPrepareService(Protoc
 
     service::Directories dirs(state_info);
     std::string resp_str = service::MakeDirectoryResponce(dirs);
-    return dclient->StateServiceSuccess(req->id, resp_str);
+    return dclient->PrepareServiceSuccess(req->id, resp_str);
   }
 
   return common::make_errno_error_inval();
@@ -1123,9 +1123,11 @@ void ProcessSlaveWrapper::AddStreamLine(const serialized_stream_t& config_args) 
       for (const OutputUri& out_uri : output) {
         common::uri::Url ouri = out_uri.GetOutput();
         if (ouri.GetScheme() == common::uri::Url::http) {
-          const common::file_system::ascii_directory_string_path http_root = out_uri.GetHttpRoot();
-          config_args->Insert(CLEANUP_TS_FIELD, common::Value::CreateBooleanValue(false));
-          vods_links_.Insert(http_root, config_args);
+          const auto http_root = out_uri.GetHttpRoot();
+          if (http_root) {
+            config_args->Insert(CLEANUP_TS_FIELD, common::Value::CreateBooleanValue(false));
+            vods_links_.Insert(*http_root, config_args);
+          }
         }
       }
     }
@@ -1135,8 +1137,10 @@ void ProcessSlaveWrapper::AddStreamLine(const serialized_stream_t& config_args) 
       for (const OutputUri& out_uri : output) {
         common::uri::Url ouri = out_uri.GetOutput();
         if (ouri.GetScheme() == common::uri::Url::http) {
-          const common::file_system::ascii_directory_string_path http_root = out_uri.GetHttpRoot();
-          cods_links_.Insert(http_root, config_args);
+          const auto http_root = out_uri.GetHttpRoot();
+          if (http_root) {
+            cods_links_.Insert(*http_root, config_args);
+          }
         }
       }
     }

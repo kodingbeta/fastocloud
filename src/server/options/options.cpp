@@ -461,7 +461,6 @@ bool FindOption(const std::string& key, option_t* opt) {
     {RELAY_AUDIO_FIELD, dont_validate},
     {RELAY_VIDEO_FIELD, dont_validate},
     {LOOP_FIELD, dont_validate},
-    {AVFORMAT_FIELD, dont_validate},
     {SIZE_FIELD, validate_size},
     {CLEANUP_TS_FIELD, validate_cleanupts},
     {LOGO_FIELD, dont_validate},
@@ -535,7 +534,8 @@ bool FindOption(const std::string& key, option_t* opt) {
     {EAVC_ENC_DEBLOCK_BETA, dummy_validator_integer},
     {EAVC_ENC_INITIAL_DELAY, dummy_validator_integer},
     {EAVC_ENC_FIELD_ORDER, dummy_validator_integer},
-    {EAVC_ENC_GOP_ADAPTIVE, dont_validate}
+    {EAVC_ENC_GOP_ADAPTIVE, dont_validate},
+    {TS_DEMUX_PROGRAM_NUMBER, dont_validate},
   };
   for (const option_t& cur : ALLOWED_OPTIONS) {
     if (cur.first == key) {
